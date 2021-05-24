@@ -3,6 +3,7 @@ Final project for QSS 20 - The aim of this project is to use the features within
 
 ## 1. Data Sources 
 * WHD Violations Data: https://enfxfr.dol.gov/data_catalog/WHD/whd_whisard_20210415.csv.zip
-- first 
-- DOL Quarterly Jobs Data: https://www.dol.gov/agencies/eta/foreign-labor/performance
+  * File structure: https://www.dol.gov/sites/dolgov/files/ETA/oflc/pdfs/H-2A_FY18_Record_Layout.pdf 
+* DOL Quarterly Jobs Data: https://www.dol.gov/agencies/eta/foreign-labor/performance
+  * File structure: https://github.com/rebeccajohnson88/qss20_s21_proj/blob/main/data/documentation/whd_data_dictionary.csv
 
