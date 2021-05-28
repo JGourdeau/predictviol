@@ -15,6 +15,7 @@ Final project for QSS 20 - The aim of this project is to use the features within
 
 ## Results
 
-
+1. Data Cleaning:
+   * [cleaning.ipynb](https://github.com/JGourdeau/predictviol/blob/main/cleaning.ipynb)
 
 
