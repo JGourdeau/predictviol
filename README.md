@@ -13,8 +13,6 @@ Final project for QSS 20 - The aim of this project is to use the features within
   
 ## Methods
 
-## Results
-
 1.) Data Cleaning:
 * [A_CleaningPreMatrixPrep.ipynb](https://github.com/JGourdeau/predictviol/blob/main/JGWorking/A_CleaningPreMatrixPrep.ipynb)
 * Takes in:
@@ -29,6 +27,7 @@ Final project for QSS 20 - The aim of this project is to use the features within
 
 2.) Feature Matrix Preparation: 
 
+## Results
 
 
 
