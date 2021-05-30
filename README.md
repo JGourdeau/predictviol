@@ -15,7 +15,21 @@ Final project for QSS 20 - The aim of this project is to use the features within
 
 ## Results
 
-1. Data Cleaning:
-   * [cleaning.ipynb](https://github.com/JGourdeau/predictviol/blob/main/cleaning.ipynb)
+1.) Data Cleaning:
+* [A_CleaningPreMatrixPrep.ipynb](https://github.com/JGourdeau/predictviol/blob/main/JGWorking/A_CleaningPreMatrixPrep.ipynb)
+* Takes in:
+    - 2018 DOL Quarterly Jobs Data
+    - WHD Violations Data
+* Does: 
+    - Cleans application and violation employer names to improve matching performance
+    - Fuzzy Matches H2A applications from DOL to Violations from WHD
+    - Uses these matches, creates a binary classifier for violators or non-violators within the applications Data
+* Outputs: 
+    - A CSV, PreMatrix.csv, for use with notebook/script B
+
+2.) Feature Matrix Preparation: 
+
+
+
 
 
