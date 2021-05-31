@@ -22,11 +22,26 @@ Final project for QSS 20 - The aim of this project is to use the features within
     - Cleans application and violation employer names to improve matching performance
     - Fuzzy Matches H2A applications from DOL to Violations from WHD
     - Uses these matches, creates a binary classifier for violators or non-violators within the applications Data
+    - Creates one "representative application" for each of the unique companies in the application data set
+    - Binds these representative applications into a new representative data frame
 * Outputs: 
-    - A CSV, PreMatrix.csv, for use with notebook/script B
+    - A CSV, RepMatrix.csv, for use with notebook/script B
 
 2.) Feature Matrix Preparation: 
-
+* [B_feature_matrix_prep.ipynb](https://github.com/JGourdeau/predictviol/blob/main/JGWorking/B_feature_matrix_prep.ipynb)
+* Takes in: 
+    - the CSV RepMatrix.csv from [A_CleaningPreMatrixPrep.ipynb](https://github.com/JGourdeau/predictviol/blob/main/JGWorking/A_CleaningPreMatrixPrep.ipynb)
+* Does: 
+    - Reads in the data and drops columns with all null values
+    - Automatically separates columns (aka 'features') into numeric and categorical features
+    - Imputes the numeric and categorical features separately
+    - Remerges the imputed data and uses OneHot Encoding to prepare for model 
+    - Applies an 80/20 train test split to create a training and testing dataset 
+    - Using a random forest classifier, fits a model to the data
+    - Generates a confusion matrix to visually inspect performance
+* Outputs: 
+    - None
+  
 ## Results
 
 
