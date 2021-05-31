@@ -15,14 +15,14 @@ import time
 # InteractiveShell.ast_node_interactivity = "all"
 
 ## load in h2a data
-h2a = pd.read_excel("../my_data/h2a_2018.xlsx")
+h2a = pd.read_excel("./my_data/h2a_2018.xlsx")
 
 ## load in investigations/violations data
 # url = "../my_data/whd_whisard.csv"
 url = "https://enfxfr.dol.gov/data_catalog/WHD/whd_whisard_20210415.csv.zip"
-investigations = pd.read_csv(url, 
+investigations = pd.read_csv(url,
                       index_col=None,
-                      dtype={7:'string'})
+                      dtype={7:'str'})
 
 ## convert the dates to datetime objects
 investigations['findings_start_date'] = pd.to_datetime(investigations['findings_start_date'], errors='coerce')
@@ -51,7 +51,7 @@ def clean_names(one):
     string_version = str(one)               ## convert to string
     upper_only = string_version.upper()     ## convert to uppercase
     pattern = r"(LLC|CO|INC)\."             ## locate the LLC, CO, or INC that are followed by a period
-    replacement = r'\1'                     ## replace the whole pattern with the LLC/CO/INC component 
+    replacement = r'\1'                     ## replace the whole pattern with the LLC/CO/INC component
     res = re.sub(pattern, replacement, upper_only)  ## compute and return the result
     return res
 
@@ -73,7 +73,7 @@ def fuzzyMatch(dbase1, dbase2, blockLeft, blockRight, matchVar1, matchVar2, dist
     link_jobs_debar.block(left_on = blockLeft, right_on = blockRight)         ## block on the given block variable
 
     ## form our index with the two given databases
-    candidate_links = link_jobs_debar.index(dbase1, dbase2) 
+    candidate_links = link_jobs_debar.index(dbase1, dbase2)
 
     compare = recordlinkage.Compare()       ## initialize our compare class
     if (len(matchVar1) != len(matchVar2)):  ## ensure matching num. of matching vars
@@ -84,7 +84,7 @@ def fuzzyMatch(dbase1, dbase2, blockLeft, blockRight, matchVar1, matchVar2, dist
         compare.string(matchVar1[i], matchVar2[i], method = distFunction, threshold = threshold)
 
     compare_vectors = compare.compute(candidate_links, dbase1, dbase2) ## compute
-    compare_vectors 
+    compare_vectors
 
     # rename columns
     temp_array = []
@@ -93,7 +93,7 @@ def fuzzyMatch(dbase1, dbase2, blockLeft, blockRight, matchVar1, matchVar2, dist
         temp_array.append(colName)
     compare_vectors.columns = temp_array
 
-    ## Find the correct selection 
+    ## Find the correct selection
     conditions = []
     for one in matchVar1:
         condition_string = "({one_input} == 1)".format(one_input = one)
@@ -127,7 +127,7 @@ def fuzzyMatch(dbase1, dbase2, blockLeft, blockRight, matchVar1, matchVar2, dist
     m2 = pd.merge(m1, dbase2[dbase2_columns], on = "index_dbase2", how = "inner", suffixes = ["_left", "_right"])
 
     return m2
-    
+
 #################################################################################################
 approved_only["city"] = [one.upper() for one in approved_only.EMPLOYER_CITY]
 violations["city"] = [one.upper() for one in violations.cty_nm]
@@ -145,7 +145,7 @@ res = fuzzyMatch(approved_only, violations, blockLeft,blockRight,matchingVarsLef
 fuzzy_match_violations = res.loc[(res.h2a_violtn_cnt > 0) & ((res.findings_start_date >= res.JOB_START_DATE)),:].copy()
 fuzzy_match_violations
 
-print('we found %s unique employers in the 2018 H2A with violations' %res.nameH2A.nunique())
+print('we found %s unique employers in the 2018 H2A with violations' %res.name.nunique())
 
 # Make a classifier for Y if the name in the H2A was fuzzy matched in m2
 approved_only_pure["is_violator"] = np.where(approved_only_pure.name.isin(list(fuzzy_match_violations.name_y)), 1, 0)
@@ -161,17 +161,18 @@ def find_pattern(string, pat):
     res = re.findall(pat, string)
     if (len(res) > 0):
         return True
-    else: 
+    else:
         return False
 
 def find_mode(col_of_interest):
     list_version = list(col_of_interest.values)
     values = sorted(list_version, key = list_version.count, reverse=True)  ## sorted the adj_only list in descending order
     values_no_dups = list(dict.fromkeys(values))                      ## remove duplicates while preserving order to get top 5
-    return values_no_dups[0]  
+    return values_no_dups[0]
 
 
 def form_representative(df, col_to_groupby):
+    print('**** FORMING REPS ****')
     list_of_reps = []
     for one in df[col_to_groupby].unique():
         temp_df = df.loc[df[col_to_groupby] == one].copy()
@@ -194,13 +195,13 @@ def form_representative(df, col_to_groupby):
             else:
                 print("Other type")
         list_of_reps.append(to_add)
-    
+
     res = pd.DataFrame(list_of_reps)
     return res
 
 test_res = form_representative(approved_only_pure, "name")
 test_res.head()
-        
+
 
 test_res.to_csv("repMatrix.csv")
 
