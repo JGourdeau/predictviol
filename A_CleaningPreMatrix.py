@@ -63,10 +63,12 @@ investigations_cleaned = investigations.loc[investigations.name != "NAN",:].copy
 
 investigations_cleaned[["name","h2a_violtn_cnt"]]
 # investigations_cleaned.head()
-# investigations_cleaned[investigations_cleaned.name.astype(str).str.contains("Jonas", case = False)]
 
 # subset to just those which have violations
-violations = investigations_cleaned.loc[investigations_cleaned.h2a_violtn_cnt > 0, :].copy()
+# violations = investigations_cleaned.loc[investigations_cleaned.h2a_violtn_cnt > 0, :].copy()
+
+## violations is now all investigations
+violations = investigations_cleaned.copy()
 
 def fuzzyMatch(dbase1, dbase2, blockLeft, blockRight, matchVar1, matchVar2, distFunction, threshold, colsLeft, colsRight):
     link_jobs_debar = recordlinkage.Index() ## initialize our Index
@@ -138,11 +140,11 @@ blockRight = "st_cd"
 matchingVarsLeft = ["name","city"]
 matchingVarsRight = ["name","city"]
 colsLeft = ["status","JOB_START_DATE","JOB_END_DATE","EMPLOYER_STATE", "name","index_dbase1","city"]
-colsRight = ["st_cd", "name", "h2a_violtn_cnt","findings_start_date","findings_end_date","index_dbase2","city"]
+colsRight = ["st_cd", "name", "h2a_violtn_cnt","findings_start_date","findings_end_date","index_dbase2","city","ld_dt"]
 
 res = fuzzyMatch(approved_only, violations, blockLeft,blockRight,matchingVarsLeft,matchingVarsRight,"jarowinkler",0.85,colsLeft,colsRight)
 
-fuzzy_match_violations = res.loc[(res.h2a_violtn_cnt > 0) & ((res.findings_start_date >= res.JOB_START_DATE)),:].copy()
+fuzzy_match_violations = res.loc[(res.ld_dt >= res.JOB_START_DATE),:].copy()
 fuzzy_match_violations
 
 print('we found %s unique employers in the 2018 H2A with violations' %res.name.nunique())
