@@ -27,7 +27,7 @@ Final project for QSS 20 - The aim of this project is to use the features within
 * Outputs: 
     - A CSV, RepMatrix.csv, for use with notebook/script B
 
-2.) Feature Matrix Preparation: 
+2.) Feature Matrix Preparation and Model Fitting: 
 * [B_feature_matrix_prep.ipynb](https://github.com/JGourdeau/predictviol/blob/main/JGWorking/B_feature_matrix_prep.ipynb)
 * Takes in: 
     - the CSV RepMatrix.csv from [A_CleaningPreMatrixPrep.ipynb](https://github.com/JGourdeau/predictviol/blob/main/JGWorking/A_CleaningPreMatrixPrep.ipynb)
