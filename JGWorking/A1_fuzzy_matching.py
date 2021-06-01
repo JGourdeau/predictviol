@@ -35,7 +35,7 @@ def clean_names(one):
 # Function to do the fuzzy matching
 def fuzzy_match(dbase1, dbase2, blockLeft, blockRight, matchVar1, matchVar2, distFunction,
                threshold, colsLeft, colsRight):
-    print('**** Starting Fuzzy Matching ****')
+    print('*** Starting Fuzzy Matching ***')
     link_jobs_debar = recordlinkage.Index()  # initialize our Index
     link_jobs_debar.block(left_on=blockLeft, right_on=blockRight)         # block on the given block variable
 
@@ -94,7 +94,7 @@ def fuzzy_match(dbase1, dbase2, blockLeft, blockRight, matchVar1, matchVar2, dis
     dbase2_columns = colsRight
     m2 = pd.merge(m1, dbase2[dbase2_columns], on="index_dbase2", how="inner", suffixes=["_left", "_right"])
 
-    print('***** DONE WITH FUZZY MATCHING *****')
+    print('**** DONE WITH FUZZY MATCHING ****')
     return m2
 
 
@@ -129,9 +129,9 @@ investigations["name"] = [clean_names(one) for one in investigations.legal_name]
 investigations_cleaned = investigations.loc[investigations.name != "NAN", :].copy()     # get rid of NAN names
 print('*** Cleaned Names in WHD investigations data ***')
 
-print('**** Converting ld_dt to datetime ****')
+print('*** Converting ld_dt to datetime ***')
 investigations_cleaned['ld_dt'] = pd.to_datetime(investigations_cleaned['ld_dt'], errors='coerce')
-print('**** Converted ld_dt to datetime ****')
+print('*** Converted ld_dt to datetime ***')
 
 # violations is now all investigations
 violations = investigations_cleaned[investigations_cleaned.ld_dt > '2017-01-01'].copy()
@@ -156,6 +156,6 @@ res = fuzzy_match(approved_only, violations, blockLeft, blockRight, matchingVars
 
 # Update this at some point to provide a unique file name so we don't overwrite files
 csv_path = 'fuzzyMatchResult.csv'
-print('**** SAVING %s ****' % csv_path)
+print('*** SAVING %s ***' % csv_path)
 res.to_csv("fuzzyMatchResult.csv")
 
