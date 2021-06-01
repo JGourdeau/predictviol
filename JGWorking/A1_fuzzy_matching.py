@@ -1,7 +1,7 @@
 # Authors: JG, DC
 # Date: 6/1/2021
 # Purpose: fuzzy matches between the H2A applications data and the WHD investigations data
-# Filename: B1_fuzzy_matching.py
+# Filename: A1_fuzzy_matching.py
 
 # imports
 import pandas as pd
