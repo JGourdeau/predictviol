@@ -151,6 +151,7 @@ colsLeft = ["status", "JOB_START_DATE", "JOB_END_DATE", "EMPLOYER_STATE", "name"
 colsRight = ["st_cd", "name", "h2a_violtn_cnt", "findings_start_date", "findings_end_date",
              "index_dbase2", "city", "ld_dt"]
 
+approved_only.to_csv("approvedOnly.csv")
 res = fuzzy_match(approved_only, violations, blockLeft, blockRight, matchingVarsLeft, matchingVarsRight, "jarowinkler",
                  0.85, colsLeft, colsRight)
 
