@@ -57,7 +57,7 @@ Final project for QSS 20 - The aim of this project is to use the features within
     - repMatrixforpredict_violations.csv
     - repMatrixforpredict_investigations.csv
 * Does: 
-    - Reads in the data and drops columns with all null values
+    - Reads in the data and drops (1) columns with only null values
     - Automatically separates columns (aka 'features') into numeric and categorical features
     - Imputes the numeric and categorical features separately
     - Remerges the imputed data and uses OneHot Encoding to prepare for model 
