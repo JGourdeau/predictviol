@@ -94,12 +94,16 @@ print("**** There are %s applications in the H2A approved Dataset" %len(approved
 print('**** But only %s unique companies within those applications' %approved_only_pure.name.nunique())
 
 test_res = form_representative(approved_only_pure, "name")
-test_res.head()
-
-
-test_res.to_csv("repMatrix2.csv")
-
+# test_res.head()
 test_res.shape
+
+# for violations
+test_res.to_csv("repViolationsMatrix.csv")
+
+# for all investigations use below line
+# test_res.to_csv("repInvestigationsMatrix.csv")
+
+
 
 
 
