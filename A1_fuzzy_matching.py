@@ -133,18 +133,14 @@ print('*** Converting ld_dt to datetime ***')
 investigations_cleaned['ld_dt'] = pd.to_datetime(investigations_cleaned['ld_dt'], errors='coerce')
 print('*** Converted ld_dt to datetime ***')
 
-# subset to dates older than 2017 and those with investiations
-print('*** Subsetting to only Violations before 2017-01-01 ***')
-violations = investigations_cleaned[investigations_cleaned.ld_dt > '2017-01-01' & investigations_cleaned.h2a_violtn_cnt >= 1].copy()
-
-# FOR JUST INVESTIGATIONS UNCOMENT THE BELOW 2 LINES - violations will now be all investigations
-# print('*** Subsetting to only investigations before 2017-01-01 ***')
-# violations = investigations_cleaned[investigations_cleaned.ld_dt > '2017-01-01'].copy()
+# relevant investigations are those after 2017
+print('*** Subsetting to only investigations after 2017-01-01 ***')
+relevant_investigations = investigations_cleaned[investigations_cleaned.ld_dt > '2017-01-01'].copy()
 
 # Clean up the city names
 print('*** Cleaning up City Names in both Datasets ***')
 approved_only["city"] = [str(one).upper() for one in approved_only.EMPLOYER_CITY]
-violations["city"] = [str(one).upper() for one in violations.cty_nm]
+relevant_investigations["city"] = [str(one).upper() for one in relevant_investigations.cty_nm]
 
 # fuzzy match the two datasets
 blockLeft = "EMPLOYER_STATE"
@@ -156,7 +152,7 @@ colsRight = ["st_cd", "name", "h2a_violtn_cnt", "findings_start_date", "findings
              "index_dbase2", "city", "ld_dt"]
 
 approved_only.to_csv("approvedOnly.csv")
-res = fuzzy_match(approved_only, violations, blockLeft, blockRight, matchingVarsLeft, matchingVarsRight, "jarowinkler",
+res = fuzzy_match(approved_only, relevant_investigations, blockLeft, blockRight, matchingVarsLeft, matchingVarsRight, "jarowinkler",
                  0.85, colsLeft, colsRight)
 
 # Update this at some point to provide a unique file name so we don't overwrite files
