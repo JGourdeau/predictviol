@@ -62,7 +62,7 @@ def form_representative(df, col_to_groupby):
 # -------- DRIVER CODE --------------
 
 # Read in the fuzzy matching results csv from A1_fuzzy Matching
-res = pd.read_csv('./my_data/fuzzyMatchResult.csv')
+res = pd.read_csv('fuzzyMatchResult.csv')
 print(res.head())
 
 # read in the approved csv from A1_fuzzy Matching
@@ -78,11 +78,23 @@ res["JOB_START_DATE"] = res["JOB_START_DATE"].apply(lambda d: d.replace(tzinfo=N
 # res["load_date_cleaned"] = res.load_date_cleaned.replace(tzinfo=utc)
 # res["JOB_START_DATE"] = res.JOB_START_DATE.replace(tzinfo=utc)
 
-# subset the investigations/violations such that the load date is after the start date
-fuzzy_match_violations = res.loc[(res.load_date_cleaned >= res.JOB_START_DATE), :].copy()
-fuzzy_match_violations
+# mode should be either 'predict_investigations' or 'predict_violations'
+# CHOSE MODE HERE!
+# mode = 'predict_investigations'
+mode = 'predict_violations'
 
-print('we found %s unique employers in the 2018 H2A with violations' %res.name.nunique())
+if (mode == 'predict_investigations'):
+    # subset the fuzzymatches such that the load date is after the job start date
+    # the below line gives us investigations
+    fuzzy_match_violations = res.loc[(res.load_date_cleaned >= res.JOB_START_DATE), :].copy()
+    print('**** subseting to %s' % mode)
+else:
+    # subset the fuzzymatches such that the load date is after the job start date and positive violaition
+    fuzzy_match_violations = res.loc[(res.load_date_cleaned >= res.JOB_START_DATE) & (res.h2a_violtn_cnt >= 1), :].copy()
+    print('**** subseting to %s' % mode)
+
+
+print('**** we found %s unique employers in the fuzzy matched data ' %fuzzy_match_violations.name.nunique())
 
 # Make a classifier for Y if the name in the H2A was fuzzy matched to the violations/investigations data
 approved_only_pure["is_violator"] = np.where(approved_only_pure.name.isin(list(fuzzy_match_violations.name_y)), 1, 0)
@@ -92,16 +104,16 @@ approved_only_pure.is_violator.value_counts()
 
 print("**** There are %s applications in the H2A approved Dataset" %len(approved_only_pure))
 print('**** But only %s unique companies within those applications' %approved_only_pure.name.nunique())
+print('**** %s ' % approved_only_pure.is_violator.value_counts())
 
 test_res = form_representative(approved_only_pure, "name")
 # test_res.head()
 test_res.shape
 
-# for violations
-test_res.to_csv("repViolationsMatrix.csv")
+test_res.to_csv('repMatrixfor' + mode + '.csv')
 
-# for all investigations use below line
-# test_res.to_csv("repInvestigationsMatrix.csv")
+
+
 
 
 
