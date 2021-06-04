@@ -133,9 +133,13 @@ print('*** Converting ld_dt to datetime ***')
 investigations_cleaned['ld_dt'] = pd.to_datetime(investigations_cleaned['ld_dt'], errors='coerce')
 print('*** Converted ld_dt to datetime ***')
 
-# violations is now all investigations
-violations = investigations_cleaned[investigations_cleaned.ld_dt > '2017-01-01'].copy()
-print('*** Subsetting to only investigations before 2017-01-01 ***')
+# subset to dates older than 2017 and those with investiations
+print('*** Subsetting to only Violations before 2017-01-01 ***')
+violations = investigations_cleaned[investigations_cleaned.ld_dt > '2017-01-01' & investigations_cleaned.h2a_violtn_cnt >= 1].copy()
+
+# FOR JUST INVESTIGATIONS UNCOMENT THE BELOW 2 LINES - violations will now be all investigations
+# print('*** Subsetting to only investigations before 2017-01-01 ***')
+# violations = investigations_cleaned[investigations_cleaned.ld_dt > '2017-01-01'].copy()
 
 # Clean up the city names
 print('*** Cleaning up City Names in both Datasets ***')

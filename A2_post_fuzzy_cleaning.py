@@ -13,6 +13,7 @@ import time
 import warnings
 warnings.filterwarnings("ignore", category=DeprecationWarning)
 
+# adapts regex to find patter in a string
 def find_pattern(string, pat):
     res = re.findall(pat, string)
     if (len(res) > 0):
@@ -20,13 +21,15 @@ def find_pattern(string, pat):
     else:
         return False
 
+# finds the most occuring item in the column
 def find_mode(col_of_interest):
     list_version = list(col_of_interest.values)
     values = sorted(list_version, key = list_version.count, reverse=True)  ## sorted the adj_only list in descending order
-    values_no_dups = list(dict.fromkeys(values))                        ## remove duplicates while preserving order to get top 5
+    values_no_dups = list(dict.fromkeys(values))                           ## remove duplicates while preserving order to get top 5
     return values_no_dups[0]
 
 
+# forms a representative application dataframe by using an assigned technique based on the column data type
 def form_representative(df, col_to_groupby):
     print('**** FORMING REPS ****')
     list_of_reps = []
@@ -56,37 +59,39 @@ def form_representative(df, col_to_groupby):
     print("**** DONE FORMING REPS *****")
     return res
 
+# -------- DRIVER CODE --------------
 
-# Read in the csv from A1_fuzzy Matching
+# Read in the fuzzy matching results csv from A1_fuzzy Matching
 res = pd.read_csv('./my_data/fuzzyMatchResult.csv')
 print(res.head())
 
+# read in the approved csv from A1_fuzzy Matching
 approved_only_pure = pd.read_csv('./approvedOnly.csv')
 
-res["load_date_cleaned"] =  pd.to_datetime(res['ld_dt'], errors='coerce')
-res["JOB_START_DATE"] =  pd.to_datetime(res['JOB_START_DATE'], errors='coerce')
-
-# import pytz
-
-# utc=pytz.UTC
+# convert these to datetimes
+res["load_date_cleaned"] = pd.to_datetime(res['ld_dt'], errors='coerce')
+res["JOB_START_DATE"] = pd.to_datetime(res['JOB_START_DATE'], errors='coerce')
+# make both timezone unaware
 res["load_date_cleaned"] = res["load_date_cleaned"].apply(lambda d: d.replace(tzinfo=None))
 res["JOB_START_DATE"] = res["JOB_START_DATE"].apply(lambda d: d.replace(tzinfo=None))
+
 # res["load_date_cleaned"] = res.load_date_cleaned.replace(tzinfo=utc)
 # res["JOB_START_DATE"] = res.JOB_START_DATE.replace(tzinfo=utc)
 
-fuzzy_match_violations = res.loc[(res.load_date_cleaned >= res.JOB_START_DATE),:].copy()
+# subset the investigations/violations such that the load date is after the start date
+fuzzy_match_violations = res.loc[(res.load_date_cleaned >= res.JOB_START_DATE), :].copy()
 fuzzy_match_violations
 
 print('we found %s unique employers in the 2018 H2A with violations' %res.name.nunique())
-# Make a classifier for Y if the name in the H2A was fuzzy matched in m2
+
+# Make a classifier for Y if the name in the H2A was fuzzy matched to the violations/investigations data
 approved_only_pure["is_violator"] = np.where(approved_only_pure.name.isin(list(fuzzy_match_violations.name_y)), 1, 0)
 approved_only_pure.is_violator.value_counts()
 #approved_only_pure.head()
+#approved_only_pure.dtypes
 
-approved_only_pure.dtypes
-
-print("there are %s applications in the H2A approved Dataset" %len(approved_only_pure))
-print('but only %s unique companies within those applications' %approved_only_pure.name.nunique())
+print("**** There are %s applications in the H2A approved Dataset" %len(approved_only_pure))
+print('**** But only %s unique companies within those applications' %approved_only_pure.name.nunique())
 
 test_res = form_representative(approved_only_pure, "name")
 test_res.head()
