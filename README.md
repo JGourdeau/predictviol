@@ -33,7 +33,7 @@ Final project for QSS 20 - The aim of this project is to use the features within
 * [A2_post_fuzzy_cleaning.py](https://github.com/JGourdeau/predictviol/blob/main/code/A1_post_fuzzy_cleaning.py)
 * Takes in:
     - FuzzyMatchResult.csv
-    - ApprovedOnly.csv 
+    - [ApprovedOnly.csv](https://www.dropbox.com/s/h8fj10eucr30icy/approvedOnly.csv?dl=0) 
 * Does: 
     - Allows user to set a mode either 'predict_violations' or 'predict_investigations'. 
     - If predict_violation mode selected: subsets the fuzzy matches to only those with a violation count. 
