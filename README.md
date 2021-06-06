@@ -14,7 +14,7 @@ Final project for QSS 20 - The aim of this project is to use the features within
 ## Methods
 
 1.) Data Cleaning:
-* [A1_fuzzy_matching.py](https://github.com/JGourdeau/predictviol/blob/main/A1_fuzzy_matching.py)
+* [A1_fuzzy_matching.py](https://github.com/JGourdeau/predictviol/blob/main/code/A1_fuzzy_matching.py)
 * Takes in:
     - 2018 DOL Quarterly Jobs Data
     - WHD Violations Data
@@ -30,7 +30,7 @@ Final project for QSS 20 - The aim of this project is to use the features within
     - A csv of approved H2A applications (ApprovedOnly.csv)
 
 2.) Additional Cleaning: 
-* [A2_post_fuzzy_cleaning.py](https://github.com/JGourdeau/predictviol/blob/main/A1_post_fuzzy_cleaning.py)
+* [A2_post_fuzzy_cleaning.py](https://github.com/JGourdeau/predictviol/blob/main/code/A1_post_fuzzy_cleaning.py)
 * Takes in:
     - FuzzyMatchResult.csv
     - ApprovedOnly.csv 
@@ -51,8 +51,8 @@ Final project for QSS 20 - The aim of this project is to use the features within
             - outputs a csv the representative applications with a classifier corresponding to those companies which have been investigated. 
             - (repMatrixforpredict_investigations.csv)
 
-2.) Feature Matrix Preparation and Model Fitting: 
-* [B_feature_matrix_prep.ipynb](https://github.com/JGourdeau/predictviol/blob/main/JGWorking/B_feature_matrix_prep.ipynb)
+3.) Feature Matrix Preparation and Model Fitting: 
+* [B_feature_matrix_prep.ipynb](https://github.com/JGourdeau/predictviol/blob/main/code/B_feature_matrix_prep.ipynb)
 * Takes in either from A1_post_fuzzy_cleaning: 
     - repMatrixforpredict_violations.csv
     - repMatrixforpredict_investigations.csv
@@ -66,8 +66,18 @@ Final project for QSS 20 - The aim of this project is to use the features within
     - Generates a confusion matrix to visually inspect performance
 * Outputs: 
     - prints a confusion matrix and statistics related to model accuracy
+
+4.) Data exploration, figure and table generation
+ * [C_input_data_analysis.ipynb](https://github.com/JGourdeau/predictviol/blob/main/code/C_input_data_analysis.ipynb)
+ * Takes in: 
+   - repMatrixforpredict_violations.csv
+   - repMatrixforpredict_investigations.csv
+   - FuzzyMatchResult.csv
+   - ApprovedOnly.csv
+ * Does: 
+   - Makes heatmap figures of violation and investigation rates by state
+   - Make histograms of top ten violation and investigation labels for law firm and crop
+   - Basic uni-variate distribution analysis
+ * Outputs: 
+   - All figures and graphs output within notebook 
   
-
-
-
-
