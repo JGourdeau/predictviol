@@ -100,7 +100,7 @@ def fuzzy_match(dbase1, dbase2, blockLeft, blockRight, matchVar1, matchVar2, dis
 
 # -------- DRIVER CODE --------
 # load in h2a data
-h2a = pd.read_excel("./my_data/h2a_2018.xlsx")
+h2a = pd.read_excel("../data/h2a_2018.xlsx")
 print('*** H2A Loaded ***')
 
 # load in investigations/violations data
@@ -151,12 +151,12 @@ colsLeft = ["status", "JOB_START_DATE", "JOB_END_DATE", "EMPLOYER_STATE", "name"
 colsRight = ["st_cd", "name", "h2a_violtn_cnt", "findings_start_date", "findings_end_date",
              "index_dbase2", "city", "ld_dt"]
 
-approved_only.to_csv("approvedOnly.csv")
+approved_only.to_csv("../output/approvedOnly.csv")
 res = fuzzy_match(approved_only, relevant_investigations, blockLeft, blockRight, matchingVarsLeft, matchingVarsRight, "jarowinkler",
                  0.85, colsLeft, colsRight)
 
 # Update this at some point to provide a unique file name so we don't overwrite files
-csv_path = 'fuzzyMatchResult.csv'
+csv_path = '../output/fuzzyMatchResult.csv'
 print('*** SAVING %s ***' % csv_path)
-res.to_csv("fuzzyMatchResult.csv")
+res.to_csv("../output/fuzzyMatchResult.csv")
 

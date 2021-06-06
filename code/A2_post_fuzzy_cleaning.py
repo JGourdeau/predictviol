@@ -62,11 +62,11 @@ def form_representative(df, col_to_groupby):
 # -------- DRIVER CODE --------------
 
 # Read in the fuzzy matching results csv from A1_fuzzy Matching
-res = pd.read_csv('fuzzyMatchResult.csv')
+res = pd.read_csv('../output/fuzzyMatchResult.csv')
 print(res.head())
 
 # read in the approved csv from A1_fuzzy Matching
-approved_only_pure = pd.read_csv('./approvedOnly.csv')
+approved_only_pure = pd.read_csv('../output/approvedOnly.csv')
 
 # convert these to datetimes
 res["load_date_cleaned"] = pd.to_datetime(res['ld_dt'], errors='coerce')
@@ -110,7 +110,7 @@ test_res = form_representative(approved_only_pure, "name")
 # test_res.head()
 test_res.shape
 
-test_res.to_csv('repMatrixfor' + mode + '.csv')
+test_res.to_csv('../output/repMatrixfor' + mode + '.csv')
 
 
 
