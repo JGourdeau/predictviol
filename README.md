@@ -27,7 +27,7 @@ Final project for QSS 20 - The aim of this project is to use the features within
     - Saves a csv of fuzzy matches between approved applications and investigations
 * Outputs: 
     - A csv of fuzzy matches between approved applications and investigations (fuzzyMatchResult.csv)
-    - A csv of approved H2A applications (ApprovedOnly.csv)
+    - A csv of approved H2A applications [ApprovedOnly.csv](https://www.dropbox.com/s/h8fj10eucr30icy/approvedOnly.csv?dl=0) 
 
 2.) Additional Cleaning: 
 * [A2_post_fuzzy_cleaning.py](https://github.com/JGourdeau/predictviol/blob/main/code/A1_post_fuzzy_cleaning.py)
@@ -73,7 +73,7 @@ Final project for QSS 20 - The aim of this project is to use the features within
    - repMatrixforpredict_violations.csv
    - repMatrixforpredict_investigations.csv
    - FuzzyMatchResult.csv
-   - ApprovedOnly.csv
+   - [ApprovedOnly.csv](https://www.dropbox.com/s/h8fj10eucr30icy/approvedOnly.csv?dl=0) 
  * Does: 
    - Makes heatmap figures of violation and investigation rates by state
    - Make histograms of top ten violation and investigation labels for law firm and crop
